@@ -6,6 +6,7 @@ import {
   GREGORIAN_WEEK_DAYS,
   PERSIAN_WEEK_DAYS,
   PERSIAN_NUMBERS,
+  AFGHAN_MONTHS,
 } from './constants';
 import { toExtendedDay } from './generalUtils';
 
@@ -41,6 +42,41 @@ const localeLanguages = {
   },
   fa: {
     months: PERSIAN_MONTHS,
+    weekDays: PERSIAN_WEEK_DAYS,
+    weekStartingIndex: 1,
+    getToday({ year, month, day }) {
+      const { jy, jm, jd } = jalaali.toJalaali(year, month, day);
+      return { year: jy, month: jm, day: jd };
+    },
+    toNativeDate(date) {
+      const gregorian = jalaali.toGregorian(...toExtendedDay(date));
+      return new Date(gregorian.gy, gregorian.gm - 1, gregorian.gd);
+    },
+    getMonthLength(date) {
+      return jalaali.jalaaliMonthLength(date.year, date.month);
+    },
+    transformDigit(digit) {
+      return digit
+        .toString()
+        .split('')
+        .map(letter => PERSIAN_NUMBERS[Number(letter)])
+        .join('');
+    },
+    nextMonth: 'ماه بعد',
+    previousMonth: 'ماه قبل',
+    openMonthSelector: 'نمایش انتخابگر ماه',
+    openYearSelector: 'نمایش انتخابگر سال',
+    closeMonthSelector: 'بستن انتخابگر ماه',
+    closeYearSelector: 'بستن انتخابگر ماه',
+    from: 'از',
+    to: 'تا',
+    defaultPlaceholder: 'انتخاب...',
+    digitSeparator: '،',
+    yearLetterSkip: -2,
+    isRtl: true,
+  },
+  af: {
+    months: AFGHAN_MONTHS,
     weekDays: PERSIAN_WEEK_DAYS,
     weekStartingIndex: 1,
     getToday({ year, month, day }) {

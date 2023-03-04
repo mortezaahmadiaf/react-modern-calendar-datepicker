@@ -14,6 +14,20 @@ export const PERSIAN_MONTHS = [
   'بهمن',
   'اسفند',
 ];
+export const AFGHAN_MONTHS = [
+  'حَمَل',
+  'ثَور',
+  'جَوزا',
+  'سَرَطان',
+  'اَسَد',
+  'سُنبُله',
+  'میزان',
+  'عَقرَب',
+  '	قَوس',
+  'جَدْی',
+  'دَلو',
+  '	حوت',
+];
 
 export const GREGORIAN_MONTHS = [
   'January',

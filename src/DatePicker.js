@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 
 import { Calendar } from './Calendar';
@@ -33,7 +35,7 @@ const DatePicker = ({
   locale,
   shouldHighlightWeekends,
   renderFooter,
-  customDaysClassName,
+  customDaysClassName,parentId='',parentClassName=''
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -81,7 +83,11 @@ const DatePicker = ({
   useLayoutEffect(() => {
     if (!isCalendarOpen) return;
     const { left, width, height, top } = calendarContainerElement.current.getBoundingClientRect();
-    const { clientWidth, clientHeight } = document.documentElement;
+    const { clientWidth, clientHeight } = document.getElementById(parentId)
+      ? document.getElementById(parentId)
+      : document.getElementsByClassName(parentClassName)&&document.getElementsByClassName(parentClassName).length
+      ? document.getElementsByClassName(parentClassName)[0]
+      : document.documentElement;
     const isOverflowingFromRight = left + width > clientWidth;
     const isOverflowingFromLeft = left < 0;
     const isOverflowingFromBottom = top + height > clientHeight;
@@ -94,7 +100,7 @@ const DatePicker = ({
       const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
 
       const leftStyle = isOverflowingFromRight
-        ? `calc(50% - ${overflowFromRightDistance}px)`
+        ? `calc(${parentId||parentClassName?'100% ':"50%"} - ${overflowFromRightDistance}px)`
         : `calc(50% + ${rightPosition}px)`;
       return leftStyle;
     };
@@ -198,6 +204,8 @@ DatePicker.defaultProps = {
   wrapperClassName: '',
   locale: 'en',
   calendarPopperPosition: 'auto',
+  parentClassName:'p-dialog'
+
 };
 
 export default DatePicker;

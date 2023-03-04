@@ -16,6 +16,7 @@ body {
   background: #FBFBFB;
   /* font-family: iranyekan;  for Persian playground */
   font-family: 'Open Sans';
+  /* direction: rtl; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
