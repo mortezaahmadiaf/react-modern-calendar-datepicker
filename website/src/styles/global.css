@@ -71,7 +71,7 @@ button {
 
 .-aboveAll {
   position: relative;
-  z-index: 11;
+  z-index: 1;
 }
 
 .custom-code {

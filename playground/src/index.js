@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 
 const App = () => {
   const [selectedDay, setValue] = useState(null);
-  return <DatePicker locale={'af'} value={selectedDay} onChange={setValue} shouldHighlightWeekends />;
+  return <div id='test' style={{height:200,background:"red",width:"100%",display:"flex",justifyContent:"end" }}> <DatePicker  locale={'af'} value={selectedDay} onChange={setValue} shouldHighlightWeekends /></div>;
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

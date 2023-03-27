@@ -91,23 +91,22 @@ const DatePicker = ({
     const isOverflowingFromRight = left + width > clientWidth;
     const isOverflowingFromLeft = left < 0;
     const isOverflowingFromBottom = top + height > clientHeight;
-
+console.log( {left, width, height, top})
     const getLeftStyle = () => {
       const overflowFromRightDistance = left + width - clientWidth;
 
       if (!isOverflowingFromRight && !isOverflowingFromLeft) return;
       const overflowFromLeftDistance = Math.abs(left);
       const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
-
       const leftStyle = isOverflowingFromRight
-        ? `calc(${parentId||parentClassName?'100% ':"50%"} - ${overflowFromRightDistance}px)`
+        ? `calc(${parentId||parentClassName?'100%':"50%"} - ${parentId||parentClassName?width:overflowFromRightDistance}px)`
         : `calc(50% + ${rightPosition}px)`;
       return leftStyle;
     };
 
     calendarContainerElement.current.style.left = getLeftStyle();
     if (
-      (calendarPopperPosition === 'auto' && isOverflowingFromBottom) ||
+      (calendarPopperPosition === 'auto' && isOverflowingFromBottom&&top>height) ||
       calendarPopperPosition === 'top'
     ) {
       calendarContainerElement.current.classList.add('-top');

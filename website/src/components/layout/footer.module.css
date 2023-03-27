@@ -6,7 +6,7 @@
   align-items: center;
   min-height: 7.5rem;
   position: relative;
-  z-index: 11;
+  z-index: 1;
 }
 
 .Footer__logo {
