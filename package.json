@@ -20,16 +20,6 @@
     "lib",
     "index.d.ts"
   ],
-  "author": "Kiarash Zarinmehr",
-  "homepage": "https://kiarash-z.github.io/react-modern-calendar-datepicker",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Kiarash-Z/react-modern-calendar-datepicker/issues"
-  },
-  "license": "MIT",
   "keywords": [
     "react",
     "modern",
@@ -99,9 +89,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "hooks": {}
   },
   "lint-staged": {
     "*.js": [
