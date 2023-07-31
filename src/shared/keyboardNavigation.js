@@ -1,4 +1,5 @@
 const handleArrowKeys = (e, { allowVerticalArrows }) => {
+  e.preventDefault();
   const { activeElement } = document;
   const getNthChildSafe = (element, index) => (element ? element.children[index] : null);
   const getStandardItem = item => item && (item.hasAttribute('aria-hidden') ? null : item);
@@ -16,7 +17,6 @@ const handleArrowKeys = (e, { allowVerticalArrows }) => {
 
   if (!isDefaultSelectable) activeElement.tabIndex = '-1';
   const focusIfAvailable = element => {
-    e.preventDefault();
     /* istanbul ignore else */
     if (element) {
       element.setAttribute('tabindex', '0');

@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/jsx-curly-brace-presence */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import '../../src/DatePicker.css';
@@ -8,8 +8,49 @@ import DatePicker from '../../src';
 import * as serviceWorker from './serviceWorker';
 
 const App = () => {
-  const [selectedDay, setValue] = useState(null);
-  return <div id='test' style={{height:200,background:"red",width:"100%",display:"flex",justifyContent:"end" }}> <DatePicker  locale={'af'} value={selectedDay} onChange={setValue} shouldHighlightWeekends /></div>;
+  const today = new Date();
+  const [selectedDay, setValue] = useState();
+  const [selectedDay1, setValue1] = useState();
+
+  return (
+    <div id="test" style={{ display: 'flex', flexDirection: 'column' }}>
+      <DatePicker
+        inputClassName={'p-text-end'}
+        showSecond={true}
+        showTime={true}
+        locale={'en'}
+        value={selectedDay}
+        onChange={setValue}
+        shouldHighlightWeekends
+      />{' '}
+      <div style={{ zIndex: '1000', background: 'red' }}>
+        <DatePicker
+          showSecond={true}
+          showTime={true}
+          locale={'fa'}
+          value={selectedDay}
+          onChange={setValue}
+          shouldHighlightWeekends
+        />
+      </div>{' '}
+      <DatePicker
+        showSecond={true}
+        showTime={true}
+        locale={'en'}
+        value={selectedDay}
+        onChange={setValue}
+        shouldHighlightWeekends
+      />{' '}
+      <DatePicker
+        showSecond={true}
+        showTime={true}
+        locale={'en'}
+        value={selectedDay1}
+        onChange={setValue1}
+        shouldHighlightWeekends
+      />
+    </div>
+  );
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));

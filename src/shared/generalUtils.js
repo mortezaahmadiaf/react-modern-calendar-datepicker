@@ -15,7 +15,7 @@ const isSameDay = (day1, day2) => {
   return day1.day === day2.day && day1.month === day2.month && day1.year === day2.year;
 };
 
-const putZero = number => (number.toString().length === 1 ? `0${number}` : number);
+const putZero = number => (number?.toString().length === 1 ? `0${number}` : number);
 
 const toExtendedDay = date => [date.year, date.month, date.day];
 

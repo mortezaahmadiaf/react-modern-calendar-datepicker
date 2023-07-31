@@ -19,7 +19,10 @@ const config = {
     }),
     commonjs(),
     copy({
-      targets: [{ src: 'src/DatePicker.css', dest: 'lib' }],
+      targets: [
+        { src: 'src/DatePicker.css', dest: 'lib' },
+        { src: 'src/fonts', dest: 'lib' },
+      ],
     }),
     terser(),
   ],

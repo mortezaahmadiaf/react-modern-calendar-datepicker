@@ -19,7 +19,10 @@ const utils = (locale = 'en') => {
     const year = todayDate.getFullYear();
     const month = todayDate.getMonth() + 1;
     const day = todayDate.getDate();
-    return localeGetToday({ year, month, day });
+    const hour = todayDate.getHours();
+    const minute = todayDate.getMinutes();
+    const second = todayDate.getSeconds();
+    return localeGetToday({ year, month, day, minute, hour, second });
   };
 
   const getMonthName = month => monthsList[month - 1];

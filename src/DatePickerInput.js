@@ -6,7 +6,17 @@ import { TYPE_SINGLE_DATE, TYPE_RANGE, TYPE_MUTLI_DATE } from './shared/constant
 
 const DatePickerInput = React.forwardRef(
   (
-    { value, inputPlaceholder, inputClassName, inputName, formatInputText, renderInput, locale },
+    {
+      value,
+      inputPlaceholder,
+      inputClassName,
+      inputName,
+      formatInputText,
+      renderInput,
+      locale,
+      showTime,
+      showSecond,
+    },
     ref,
   ) => {
     const { getLanguageDigits } = useLocaleUtils(locale);
@@ -24,7 +34,12 @@ const DatePickerInput = React.forwardRef(
       const year = getLanguageDigits(value.year);
       const month = getLanguageDigits(putZero(value.month));
       const day = getLanguageDigits(putZero(value.day));
-      return `${year}/${month}/${day}`;
+      const hour = value.hour !== undefined ? getLanguageDigits(putZero(value.hour)) : '';
+      const minute = value.minute !== undefined ? getLanguageDigits(putZero(value.minute)) : '';
+      const second = value.second !== undefined ? getLanguageDigits(putZero(value.second)) : '';
+      return `${year}/${month}/${day} ${
+        showTime ? `${hour}:${minute}${showSecond ? `:${second}` : ''}` : ''
+      }`;
     };
 
     const getDayRangeValue = () => {
