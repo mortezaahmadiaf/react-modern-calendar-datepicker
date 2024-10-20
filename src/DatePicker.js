@@ -6,6 +6,7 @@ import { Calendar } from './Calendar';
 import DatePickerInput from './DatePickerInput';
 import { useLocaleUtils } from './shared/hooks';
 import { TYPE_SINGLE_DATE, TYPE_MUTLI_DATE, TYPE_RANGE } from './shared/constants';
+import ReactPortal from './shared/portal';
 const DatePicker = ({
   value,
   onChange,
@@ -43,6 +44,9 @@ const DatePicker = ({
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
   const shouldPreventToggle = useRef(false);
+  let el = useRef(null);
+  const [style, setStyle] = useState(false);
+
   const [isCalendarOpen, setCalendarVisiblity] = useState(false);
   const date = new Date();
   const { getLanguageDigits } = useLocaleUtils(locale);
@@ -56,9 +60,9 @@ const DatePicker = ({
     const handleBlur = () => {
       setCalendarVisiblity(false);
     };
-    window.addEventListener('blur', handleBlur, false);
+    window?.addEventListener?.('blur', handleBlur, false);
     return () => {
-      window.removeEventListener('blur', handleBlur, false);
+      window?.removeEventListener?.('blur', handleBlur, false);
     };
   }, []);
 
@@ -105,38 +109,40 @@ const DatePicker = ({
 
   // Keep the calendar in the screen bounds if input is near the window edges
   useLayoutEffect(() => {
-    if (!isCalendarOpen) return;
-    const { left, width, height, top } = calendarContainerElement.current.getBoundingClientRect();
-    const { clientWidth, clientHeight } = document.getElementById(parentId)
+    const width = 346,
+      space = 10;
+    // document.getElementById('date-picker-container')
+    // ? document.getElementById('date-picker-container')
+    const { clientHeight } = document.getElementById(parentId)
       ? document.getElementById(parentId)
       : document.getElementsByClassName(parentClassName) &&
         document.getElementsByClassName(parentClassName).length
       ? document.getElementsByClassName(parentClassName)[0]
       : document.documentElement;
-    const isOverflowingFromRight = left + width > clientWidth;
-    const isOverflowingFromLeft = left < 0;
-    const isOverflowingFromBottom = top + height > clientHeight;
-    const getLeftStyle = () => {
-      const overflowFromRightDistance = left + width - clientWidth;
+    // some maths to align the tooltip with whatever you just hovered over (the 'target')
+    // or maybe it's 'math' in your weird country
+    const style = { width }; // this style object will be passed as the tooltip's 'style' prop
+    const dimensions = el.current.getBoundingClientRect(); // where on the screen is the target
 
-      if (!isOverflowingFromRight && !isOverflowingFromLeft) return;
-      const overflowFromLeftDistance = Math.abs(left);
-      const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
-      const leftStyle = isOverflowingFromRight
-        ? `calc(${parentId || parentClassName ? '100%' : '50%'} - ${
-            parentId || parentClassName ? width : overflowFromRightDistance
-          }px)`
-        : `calc(50% + ${rightPosition}px)`;
-      return leftStyle;
-    };
-
-    calendarContainerElement.current.style.left = getLeftStyle();
-    if (
-      // (calendarPopperPosition === 'auto' && isOverflowingFromBottom&&top>height) ||
-      calendarPopperPosition === 'top'
-    ) {
-      calendarContainerElement.current.classList.add('-top');
+    const overflowingFromBottom =
+      dimensions.top + dimensions.height > clientHeight
+        ? dimensions.top + dimensions.height - clientHeight
+        : 0;
+    // center align the tooltip by taking both the target and tooltip widths into account
+    style.left = locale === 'fa' ? dimensions.right - width : dimensions.left;
+    style.left = Math.max(space, style.left); // make sure it doesn't poke off the left side of the page
+    style.left = Math.min(style.left, document.body.clientWidth - width - space); // or off the right
+    if (dimensions.top < window.innerHeight / 2) {
+      // the top half of the page
+      // when on the top half of the page, position the top of the tooltip just below the target (it will stretch downwards)
+      style.top = dimensions.top + dimensions.height - space - overflowingFromBottom;
+    } else {
+      // when on the bottom half, set the bottom of the tooltip just above the top of the target (it will stretch upwards)
+      style.bottom = window.innerHeight - dimensions.top + space - dimensions.height;
     }
+
+    // setCalendarVisiblity(true);
+    setStyle(style);
   }, [isCalendarOpen]);
 
   const handleCalendarChange = newValue => {
@@ -299,67 +305,78 @@ const DatePicker = ({
     else return <></>;
   };
   return (
-    <div
-      onFocus={openCalendar}
-      onBlur={handleBlur}
-      onKeyUp={handleKeyUp}
-      className={`DatePicker ${wrapperClassName}  ${
-        locale === 'en' ? 'gregorian' : 'jalali'
-      }-font-family`}
-      role="presentation"
-    >
-      <DatePickerInput
-        ref={inputElement}
-        formatInputText={formatInputText}
-        value={value}
-        inputPlaceholder={inputPlaceholder}
-        inputClassName={inputClassName}
-        renderInput={renderInput}
-        inputName={inputName}
-        locale={locale}
-        showTime={showTime}
-        showSecond={showSecond}
-      />
-      {isCalendarOpen && (
-        <>
-          <div
-            ref={calendarContainerElement}
-            className="DatePicker__calendarContainer"
-            data-testid="calendar-container"
-            role="presentation"
-            onMouseDown={() => {
-              shouldPreventToggle.current = true;
-            }}
-          >
-            <Calendar
-              value={value}
-              onChange={handleCalendarChange}
-              calendarClassName={calendarClassName}
-              calendarTodayClassName={calendarTodayClassName}
-              calendarSelectedDayClassName={calendarSelectedDayClassName}
-              calendarRangeStartClassName={calendarRangeStartClassName}
-              calendarRangeBetweenClassName={calendarRangeBetweenClassName}
-              calendarRangeEndClassName={calendarRangeEndClassName}
-              disabledDays={disabledDays}
-              colorPrimary={colorPrimary}
-              colorPrimaryLight={colorPrimaryLight}
-              slideAnimationDuration={slideAnimationDuration}
-              onDisabledDayError={onDisabledDayError}
-              minimumDate={minimumDate}
-              maximumDate={maximumDate}
-              selectorStartingYear={selectorStartingYear}
-              selectorEndingYear={selectorEndingYear}
-              locale={locale}
-              shouldHighlightWeekends={shouldHighlightWeekends}
-              renderFooter={renderFooter}
-              customDaysClassName={customDaysClassName}
-              time={temp}
-            />
-          </div>
-          <div className="DatePicker__calendarArrow" />
-        </>
-      )}
-    </div>
+    <>
+      <div
+        onFocus={openCalendar}
+        onBlur={handleBlur}
+        onKeyUp={handleKeyUp}
+        className={`DatePicker ${wrapperClassName} `}
+        role="presentation"
+        ref={el}
+      >
+        <DatePickerInput
+          ref={inputElement}
+          formatInputText={formatInputText}
+          value={value}
+          inputPlaceholder={inputPlaceholder}
+          inputClassName={inputClassName}
+          renderInput={renderInput}
+          inputName={inputName}
+          locale={locale}
+          showTime={showTime}
+          showSecond={showSecond}
+        />
+        {isCalendarOpen && (
+          <>
+            <ReactPortal>
+              <div // this <div> isn't actually a child of the <span> above. Magic portal.
+                className={`portal-tooltip-body `}
+                style={style}
+              >
+                <div
+                  ref={calendarContainerElement}
+                  className={`DatePicker __calendarContainer  ${
+                    locale === 'en' ? 'gregorian' : 'jalali'
+                  }-font-family`}
+                  data-testid="calendar-container"
+                  role="presentation"
+                  onMouseDown={() => {
+                    shouldPreventToggle.current = true;
+                  }}
+                  id="calendar-popup-container"
+                >
+                  <Calendar
+                    value={value}
+                    onChange={handleCalendarChange}
+                    calendarClassName={calendarClassName}
+                    calendarTodayClassName={calendarTodayClassName}
+                    calendarSelectedDayClassName={calendarSelectedDayClassName}
+                    calendarRangeStartClassName={calendarRangeStartClassName}
+                    calendarRangeBetweenClassName={calendarRangeBetweenClassName}
+                    calendarRangeEndClassName={calendarRangeEndClassName}
+                    disabledDays={disabledDays}
+                    colorPrimary={colorPrimary}
+                    colorPrimaryLight={colorPrimaryLight}
+                    slideAnimationDuration={slideAnimationDuration}
+                    onDisabledDayError={onDisabledDayError}
+                    minimumDate={minimumDate}
+                    maximumDate={maximumDate}
+                    selectorStartingYear={selectorStartingYear}
+                    selectorEndingYear={selectorEndingYear}
+                    locale={locale}
+                    shouldHighlightWeekends={shouldHighlightWeekends}
+                    renderFooter={renderFooter}
+                    customDaysClassName={customDaysClassName}
+                    time={temp}
+                  />
+                </div>
+                {/* <div className="DatePicker__calendarArrow" /> */}
+              </div>
+            </ReactPortal>
+          </>
+        )}
+      </div>
+    </>
   );
 };
 
@@ -371,3 +388,33 @@ DatePicker.defaultProps = {
 };
 
 export default DatePicker;
+// if (!isCalendarOpen) return;
+// const { left, width, height, top } = calendarContainerElement.current.getBoundingClientRect();
+// const { clientWidth, clientHeight } = document.getElementById(parentId)
+//   ? document.getElementById(parentId)
+//   : document.getElementsByClassName(parentClassName) &&
+//     document.getElementsByClassName(parentClassName).length
+//   ? document.getElementsByClassName(parentClassName)[0]
+//   : document.documentElement;
+// const isOverflowingFromRight = left + width > clientWidth;
+// const isOverflowingFromLeft = left < 0;
+// const isOverflowingFromBottom = top + height > clientHeight;
+// const getLeftStyle = () => {
+//   const overflowFromRightDistance = left + width - clientWidth;
+//   if (!isOverflowingFromRight && !isOverflowingFromLeft) return;
+//   const overflowFromLeftDistance = Math.abs(left);
+//   const rightPosition = isOverflowingFromLeft ? overflowFromLeftDistance : 0;
+//   const leftStyle = isOverflowingFromRight
+//     ? `calc(${parentId || parentClassName ? '100%' : '50%'} - ${
+//         parentId || parentClassName ? width : overflowFromRightDistance
+//       }px)`
+//     : `calc(50% + ${rightPosition}px)`;
+//   return leftStyle;
+// };
+// calendarContainerElement.current.style.left = getLeftStyle();
+// if (
+//   // (calendarPopperPosition === 'auto' && isOverflowingFromBottom&&top>height) ||
+//   calendarPopperPosition === 'top'
+// ) {
+//   calendarContainerElement.current.classList.add('-top');
+// }

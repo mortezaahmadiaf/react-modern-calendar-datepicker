@@ -38,7 +38,6 @@ export const ReactPortal = ({ children, wrapperId = 'date-picker-container' }) =
 
   // wrapperElement state will be null on very first render.
   if (wrapperElement === null) return null;
-  console.log(wrapperElement);
   return createPortal(children, wrapperElement);
 };
 

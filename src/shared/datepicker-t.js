@@ -1,8 +1,8 @@
 import ReactPortal from './portal';
 import React, { useState, useRef, useEffect } from 'react';
-
-export const ToolTip = ({ width = 256, space = 16, children, clickEvent, show }) => {
-  const [visible, setVisible] = useState(true);
+// import '../DatePicker.css';
+export const ToolTip = ({ width = 256, space = 16, children, Element, show }) => {
+  const [visible, setVisible] = useState(false);
   const [style, setStyle] = useState(false);
   let el = useRef(null);
 
@@ -26,29 +26,16 @@ export const ToolTip = ({ width = 256, space = 16, children, clickEvent, show })
       style.bottom = window.innerHeight - dimensions.top + space;
     }
 
-    // setVisible(true);
+    setVisible(true);
     setStyle(style);
   };
 
-  const hideTooltip = () => {
-    // setVisible(false);
-  };
-
   useEffect(() => {
-    if (clickEvent) showTooltip;
-  }, [clickEvent]);
-  //   useEffect(() => {
-  //     if (typeof show === 'boolean') setVisible(show);
-  //     showTooltip;
-  //   }, [show]);
+    if (typeof show === 'boolean') setVisible(show);
+  }, [show]);
 
   return (
-    <div // a span so it's valid HTML no matter where it's used
-      //   onMouseOver={showTooltip}
-      //   onMouseOut={hideTooltip}
-      className="portal-tooltip-trigger-text"
-      ref={el}
-    >
+    <span className="portal-tooltip-trigger-text" ref={el}>
       {children}
 
       {visible && (
@@ -57,11 +44,11 @@ export const ToolTip = ({ width = 256, space = 16, children, clickEvent, show })
             className="portal-tooltip-body"
             style={style}
           >
-            {children}
+            {Element}
           </div>
         </ReactPortal>
       )}
-    </div>
+    </span>
   );
 };
 

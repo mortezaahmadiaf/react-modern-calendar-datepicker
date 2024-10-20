@@ -13,7 +13,15 @@ const App = () => {
   const [selectedDay1, setValue1] = useState();
 
   return (
-    <div id="test" style={{ display: 'flex', flexDirection: 'column' }}>
+    <div
+      id="test"
+      style={{
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'start',
+      }}
+    >
       <DatePicker
         inputClassName={'p-text-end'}
         showSecond={true}

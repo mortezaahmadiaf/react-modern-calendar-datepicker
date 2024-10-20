@@ -1,4 +1,53 @@
-@import './fonts/fonts.css';
+/**
+*
+*	Name:			IRANYekan Font
+*	Version:			3.0
+*	Author:			Moslem Ebrahimi (moslemebrahimi.com)
+*	Created on:		Dec 20, 2018
+*	Updated on:		Dec 20, 2018
+*	Website:			http://fontiran.com
+*	Copyright:		Commercial/Proprietary Software
+--------------------------------------------------------------------------------------
+فونت ایران یکان یک نرم افزار مالکیتی محسوب می شود. جهت آگاهی از قوانین استفاده از این فونت ها لطفا به وب سایت (فونت ایران دات کام) مراجعه نمایید
+--------------------------------------------------------------------------------------
+IRANYekan fonts are considered a proprietary software. To gain information about the laws regarding the use of these fonts, please visit www.fontiran.com
+--------------------------------------------------------------------------------------
+This set of fonts are used in this project under the license: GFHUSE
+--------------------------------------------------------------------------------------
+*
+**/
+@font-face {
+  font-family: iranyekan;
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: local('iranyekan'), url('./fonts/woff/iranyekanwebboldfanum.woff') format('woff'),
+    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./fonts/ttf/iranyekanwebboldfanum.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: iranyekan;
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: local('iranyekan'), url('./fonts/woff/iranyekanwebregularfanum.woff') format('woff'),
+    /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('./fonts/ttf/iranyekanwebregularfanum.ttf')
+      format('truetype');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./fonts/ttf/OpenSans-Regular.ttf');
+}
+.jalali-font-family {
+  font-family: iranyekan !important;
+}
+.gregorian-font-family {
+  font-family: 'Open Sans' !important;
+}
 
 .text-start {
   text-align: start !important;
@@ -730,57 +779,21 @@
 }
 
 .portal {
-  background: rgba(0, 0, 0, 0.589);
   height: 100vh;
   width: 100vw;
   position: fixed;
-  top: 0;
-  align-items: center;
-  justify-content: center;
   display: flex;
-  z-index: 10;
+  z-index: 999999999;
 }
 
-.portal-modal {
-  width: 100%;
-  height: 100vh;
-  overflow-y: auto;
-  z-index: 1;
-}
-
-.portal-modal-content {
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  z-index: 1;
-}
-
-.size-xl {
-  width: 90vw !important;
-}
-.size-lg {
-  width: 80vw !important;
-}
-.size-md {
-  width: 70vw !important;
-}
-.size-sm {
-  width: 60vw !important;
-}
-.size-xl {
-  width: 50vw !important;
-}
 .portal-tooltip-trigger-text {
   border-bottom: 1px dashed grey;
 }
 
 .portal-tooltip-body {
-  position: fixed;
+  position: absolute;
+  z-index: 9999999;
   padding: 8px;
-  background: #333;
-  color: white;
-  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
   text-align: center;
   font-size: 16px;
 }
