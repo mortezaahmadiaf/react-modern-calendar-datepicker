@@ -76,9 +76,9 @@ const DatePicker = ({
       };
       if (!showSecond) delete tmp.second;
       setTime(tmp);
-      onChange({ ...value, ...tmp });
+      // onChange({ ...value, ...tmp });
     }
-  }, []);
+  }, [value]);
 
   // handle input focus/blur
   useEffect(() => {

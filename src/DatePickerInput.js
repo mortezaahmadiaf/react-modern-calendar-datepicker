@@ -86,7 +86,7 @@ const DatePickerInput = React.forwardRef(
             value={getValue()}
             name={inputName}
             placeholder={placeholderValue}
-            className={`DatePicker__input -${isRtl ? 'rtl' : 'ltr'} ${inputClassName}  ${
+            className={`DatePicker__input  ${inputClassName}  ${
               locale === 'en' ? 'gregorian' : 'jalali'
             }-font-family`}
             aria-label={placeholderValue}

@@ -44,7 +44,7 @@ const App = () => {
       <DatePicker
         showSecond={true}
         showTime={true}
-        locale={'en'}
+        locale={'fa'}
         value={selectedDay}
         onChange={setValue}
         shouldHighlightWeekends
@@ -52,7 +52,7 @@ const App = () => {
       <DatePicker
         showSecond={true}
         showTime={true}
-        locale={'en'}
+        locale={'fa'}
         value={selectedDay1}
         onChange={setValue1}
         shouldHighlightWeekends
