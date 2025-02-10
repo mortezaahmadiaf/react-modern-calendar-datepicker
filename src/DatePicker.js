@@ -307,7 +307,7 @@ const DatePicker = ({
   return (
     <>
       <div
-        onFocus={openCalendar}
+        onClick={openCalendar}
         onBlur={handleBlur}
         onKeyUp={handleKeyUp}
         className={`DatePicker ${wrapperClassName} `}
