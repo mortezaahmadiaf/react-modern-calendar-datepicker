@@ -40,6 +40,7 @@ const DatePicker = ({
   parentClassName = '',
   showTime = false,
   showSecond = false,
+  disabled = false,
 }) => {
   const calendarContainerElement = useRef(null);
   const inputElement = useRef(null);
@@ -117,8 +118,8 @@ const DatePicker = ({
       ? document.getElementById(parentId)
       : document.getElementsByClassName(parentClassName) &&
         document.getElementsByClassName(parentClassName).length
-      ? document.getElementsByClassName(parentClassName)[0]
-      : document.documentElement;
+        ? document.getElementsByClassName(parentClassName)[0]
+        : document.documentElement;
     // some maths to align the tooltip with whatever you just hovered over (the 'target')
     // or maybe it's 'math' in your weird country
     const style = { width }; // this style object will be passed as the tooltip's 'style' prop
@@ -201,10 +202,10 @@ const DatePicker = ({
     const val = value
       ? value
       : {
-          year: tmp_date.getFullYear(),
-          month: tmp_date.getMonth() + 1,
-          day: tmp_date.getDate(),
-        };
+        year: tmp_date.getFullYear(),
+        month: tmp_date.getMonth() + 1,
+        day: tmp_date.getDate(),
+      };
     if (!showSecond) delete tenp_time.second;
     onChange({ ...val, ...tenp_time });
     setTime(tenp_time);
@@ -219,9 +220,8 @@ const DatePicker = ({
                 onClick={() => {
                   handleChange('h-up');
                 }}
-                className={`font-bolder font-size-35 flex-center pointer rotate-${
-                  locale === 'en' ? 'ltr' : 'rtl'
-                }`}
+                className={`font-bolder font-size-35 flex-center pointer rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                  }`}
                 style={{ paddingBlockEnd: locale === 'en' ? 10 : -10 }}
               >
                 &#8250;
@@ -232,9 +232,8 @@ const DatePicker = ({
                 onClick={() => {
                   handleChange('h-down');
                 }}
-                className={`font-bolder flex-center pointer  font-size-35 rotate-${
-                  locale === 'en' ? 'ltr' : 'rtl'
-                }`}
+                className={`font-bolder flex-center pointer  font-size-35 rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                  }`}
               >
                 &#8249;
               </span>
@@ -246,9 +245,8 @@ const DatePicker = ({
                 onClick={() => {
                   handleChange('m-up');
                 }}
-                className={`font-bolder font-size-35 flex-center pointer   rotate-${
-                  locale === 'en' ? 'ltr' : 'rtl'
-                }`}
+                className={`font-bolder font-size-35 flex-center pointer   rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                  }`}
               >
                 &#8250;
               </span>
@@ -258,9 +256,8 @@ const DatePicker = ({
                 onClick={() => {
                   handleChange('m-down');
                 }}
-                className={`font-bolder flex-center pointer  font-size-35 rotate-${
-                  locale === 'en' ? 'ltr' : 'rtl'
-                }`}
+                className={`font-bolder flex-center pointer  font-size-35 rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                  }`}
               >
                 &#8249;
               </span>
@@ -274,9 +271,8 @@ const DatePicker = ({
                     onClick={() => {
                       handleChange('s-up');
                     }}
-                    className={`font-bolder flex-center  pointer font-size-35 rotate-${
-                      locale === 'en' ? 'ltr' : 'rtl'
-                    }`}
+                    className={`font-bolder flex-center  pointer font-size-35 rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                      }`}
                   >
                     &#8250;
                   </span>
@@ -288,9 +284,8 @@ const DatePicker = ({
                     onClick={() => {
                       handleChange('s-down');
                     }}
-                    className={`font-bolder flex-center pointer  font-size-35 rotate-${
-                      locale === 'en' ? 'ltr' : 'rtl'
-                    }`}
+                    className={`font-bolder flex-center pointer  font-size-35 rotate-${locale === 'en' ? 'ltr' : 'rtl'
+                      }`}
                   >
                     &#8249;
                   </span>
@@ -325,6 +320,7 @@ const DatePicker = ({
           locale={locale}
           showTime={showTime}
           showSecond={showSecond}
+          disabled={disabled}
         />
         {isCalendarOpen && (
           <>
@@ -335,9 +331,8 @@ const DatePicker = ({
               >
                 <div
                   ref={calendarContainerElement}
-                  className={`DatePicker __calendarContainer  ${
-                    locale === 'en' ? 'gregorian' : 'jalali'
-                  }-font-family`}
+                  className={`DatePicker __calendarContainer  ${locale === 'en' ? 'gregorian' : 'jalali'
+                    }-font-family`}
                   data-testid="calendar-container"
                   role="presentation"
                   onMouseDown={() => {

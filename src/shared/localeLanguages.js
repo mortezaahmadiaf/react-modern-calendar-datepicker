@@ -19,7 +19,12 @@ const localeLanguages = {
       return gregorainTodayObject;
     },
     toNativeDate(date) {
-      return new Date(date.year, date.month - 1, date.day);
+      // return new Date(date.year, date.month - 1, date.day);
+      const y = Number(date.year);
+      const m = Number(date.month);
+      const d = Number(date.day);
+      if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date(NaN);
+      return new Date(y, m - 1, d);
     },
     getMonthLength(date) {
       return new Date(date.year, date.month, 0).getDate();

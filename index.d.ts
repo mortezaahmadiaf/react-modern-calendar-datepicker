@@ -44,6 +44,7 @@ export interface CalendarProps<TValue extends Value> {
   parentClassName?: string;
   showTime?: boolean;
   showSecond?: boolean;
+  disabled?: boolean;
 }
 
 export function Calendar(props: Optional<CalendarProps<DayValue>, 'value'>): React.ReactElement;

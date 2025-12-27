@@ -16,6 +16,7 @@ const DatePickerInput = React.forwardRef(
       locale,
       showTime,
       showSecond,
+      disabled,
     },
     ref,
   ) => {
@@ -37,9 +38,8 @@ const DatePickerInput = React.forwardRef(
       const hour = value.hour !== undefined ? getLanguageDigits(putZero(value.hour)) : '';
       const minute = value.minute !== undefined ? getLanguageDigits(putZero(value.minute)) : '';
       const second = value.second !== undefined ? getLanguageDigits(putZero(value.second)) : '';
-      return `${year}/${month}/${day} ${
-        showTime ? `${hour}:${minute}${showSecond ? `:${second}` : ''}` : ''
-      }`;
+      return `${year}/${month}/${day} ${showTime ? `${hour}:${minute}${showSecond ? `:${second}` : ''}` : ''
+        }`;
     };
 
     const getDayRangeValue = () => {
@@ -48,13 +48,13 @@ const DatePickerInput = React.forwardRef(
       const fromText = `${getLanguageDigits(putZero(from.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(from.month))}/${getLanguageDigits(
-        putZero(from.day),
-      )}`;
+          putZero(from.day),
+        )}`;
       const toText = `${getLanguageDigits(putZero(to.year))
         .toString()
         .slice(yearLetterSkip)}/${getLanguageDigits(putZero(to.month))}/${getLanguageDigits(
-        putZero(to.day),
-      )}`;
+          putZero(to.day),
+        )}`;
       return `${fromWord} ${fromText} ${toWord} ${toText}`;
     };
 
@@ -86,10 +86,10 @@ const DatePickerInput = React.forwardRef(
             value={getValue()}
             name={inputName}
             placeholder={placeholderValue}
-            className={`DatePicker__input  ${inputClassName}  ${
-              locale === 'en' ? 'gregorian' : 'jalali'
-            }-font-family`}
+            className={`DatePicker__input  ${inputClassName}  ${locale === 'en' ? 'gregorian' : 'jalali'
+              }-font-family`}
             aria-label={placeholderValue}
+            disabled={disabled}
           />
         )
       );

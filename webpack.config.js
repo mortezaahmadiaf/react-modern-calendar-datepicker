@@ -43,8 +43,8 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   devServer: {
-    port:12000,
-    open:true
+    port: 14000,
+    open: true
 
   },
   devtool: 'source-map',
